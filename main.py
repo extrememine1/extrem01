@@ -7,12 +7,12 @@ webhook = 'https://discord.com/api/webhooks/1364252228671766629/Ew6SypiVloyb5UIr
 
 @app.route('/', methods=['GET'])
 def iter_main_routes():
-    return ['school']
+    return jsonify(['school'])
 
 # ts for school projects
 @app.route('/school', methods=['GET'])
 def iter_func_school():
-    return ['secondLargest']
+    return jsonify(['secondLargest'])
 
 @app.route('/school/second_largest', methods=['POST'])
 def secondLargest():
