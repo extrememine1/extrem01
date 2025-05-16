@@ -30,6 +30,8 @@ data1 = {}
 
 @app.route('/school/funnydatabase', methods=['POST', 'GET'])
 def index1():
+    global data1
+    
     if request.method == 'GET':
         payload = {
             'content': f'{request.remote_addr} has requested for the data'
