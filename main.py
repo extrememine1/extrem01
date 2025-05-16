@@ -12,7 +12,7 @@ def iter_main_routes():
 # ts for school projects
 @app.route('/school', methods=['GET'])
 def iter_func_school():
-    return jsonify(['secondLargest'])
+    return jsonify(['second_largest', 'funnydatatbase'])
 
 @app.route('/school/second_largest', methods=['POST'])
 def secondLargest():
@@ -31,11 +31,20 @@ data1 = {}
 @app.route('/school/funnydatabase', methods=['POST', 'GET'])
 def index1():
     if request.method == 'GET':
+        payload = {
+            'content': f'{request.remote_addr} has requested for the data'
+        }
+        requests.post(webhook, json=payload)
         return jsonify(data1)
 
     elif request.method == 'POST':
         newdata = request.get_json()
         data1 = newdata
+
+        payload = {
+            'content': f'{request.remote_addr} has changed the data to {newdata}'
+        }
+        requests.post(webhook, json=payload)
 
         return jsonify({'received': newdata}), 200
 
