@@ -25,5 +25,18 @@ def secondLargest():
     ls.sort(reverse=True)
     return jsonify(ls[1])
 
+# test data framework 1
+data1 = {}
+
+@app.route('/school/funnydatabase', methods=['POST', 'GET'])
+def index1():
+    if request.method == 'GET':
+        return jsonify(data1)
+
+    elif request.method == 'POST':
+        newdata = request.get_json()
+        data1 = newdata
+
+        return jsonify({'received': newdata}), 200
 
 app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
