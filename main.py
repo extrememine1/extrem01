@@ -26,17 +26,34 @@ def secondLargest():
     return jsonify(ls[1])
 
 # test data framework 1
-data1 = {}
+DATA_FILE = 'test1.json'
+def load_data():
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r') as f:
+            return json.load(f)
+    return {}
+
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+
+data1 = load_data()
 
 @app.route('/school/funnydatabase', methods=['POST', 'GET'])
 def index1():
     global data1
+
+    def get_client_ip():
+        if request.headers.getlist("X-Forwarded-For"):
+            return request.headers.getlist("X-Forwarded-For")[0].split(',')[0]
+        return request.remote_addr
     
     if request.method == 'GET':
         payload = {
-            'content': f'{request.remote_addr} has requested for the data'
+            'content': f'{get_client_ip()} has requested for the data'
         }
         requests.post(webhook, json=payload)
+        
         return jsonify(data1)
 
     elif request.method == 'POST':
@@ -44,10 +61,11 @@ def index1():
         data1 = newdata
 
         payload = {
-            'content': f'{request.remote_addr} has changed the data to {newdata}'
+            'content': f'{get_client_ip()} has changed the data to {newdata}'
         }
         requests.post(webhook, json=payload)
 
         return jsonify({'received': newdata}), 200
 
 app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+save_data()
