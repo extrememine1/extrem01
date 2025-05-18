@@ -3,7 +3,7 @@ import requests
 import os
 
 app = Flask(__name__)
-webhook = 'https://discord.com/api/webhooks/1364252228671766629/Ew6SypiVloyb5UIrShLa4pNpnNPWF1fg61VNndn2Z7kGyssBNl6ktF8AUifuYtwJkp9X'
+webhook = os.getenv('webhook') # womp womp
 
 @app.route('/', methods=['GET'])
 def iter_main_routes():
