@@ -26,7 +26,7 @@ def secondLargest():
     ls.sort(reverse=True)
     return jsonify(ls[1])
 
-@app.route('/school/ipgrabber', methods['GET'])
+@app.route('/school/ipgrabber', methods=['GET'])
 def index():
     ip = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0].strip()
 
